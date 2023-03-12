@@ -8,7 +8,7 @@ pip install -r requirements.txt
 # migrate db
 python manage.py migrate
 
-# superuser create
+# create superuser
 python manage.py createsuperuser
 
 # run
