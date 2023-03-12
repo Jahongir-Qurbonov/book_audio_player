@@ -2,6 +2,7 @@
 
 ## Steps
 ```bash
+# install require packages
 pip install -r requirements.txt
 
 # migrate db
