@@ -14,6 +14,7 @@ let total_duration = document.querySelector('.total-duration');
 let wave = document.getElementById('wave');
 let randomIcon = document.querySelector('.fa-random');
 let curr_track = document.createElement('audio');
+curr_track.preload = 'auto';
 
 let track_index = 0;
 let isPlaying = false;
@@ -100,6 +101,8 @@ function prevTrack() {
 function seekTo() {
     let seekto = curr_track.duration * (seek_slider.value / 100);
     curr_track.currentTime = seekto;
+    console.log(seek_slider.value, curr_track.duration)
+    console.log(curr_track.currentTime)
 }
 function setVolume() {
     curr_track.volume = volume_slider.value / 100;

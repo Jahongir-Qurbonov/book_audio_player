@@ -1,8 +1,10 @@
-from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, FileResponse
+import mimetypes
+from django.http import HttpRequest, HttpResponseNotFound, FileResponse
 from django.shortcuts import render
 from django.contrib.sessions.models import Session
 from django.views.decorators.http import require_GET
 from .models import Audio, SessionAudio
+from .utils import process_response
 
 
 @require_GET
@@ -51,11 +53,18 @@ def download_book_audio(request: HttpRequest, book_url_name, audio_url_name):
         )
     except:
         return HttpResponseNotFound("File not exist")
-    session_audio.delete()
+    # session_audio.delete()
 
     try:
-        audio = Audio.objects.get(book__url_name=book_url_name, url_name=audio_url_name)
+        audio = Audio.objects.get(
+            book__url_name=book_url_name, url_name=audio_url_name
+        ).audio
     except:
         return HttpResponseNotFound("File not exist")
 
-    return FileResponse(audio.audio)
+    response = process_response(
+        request,
+        FileResponse(audio.open("rb"), mimetypes.guess_type(audio.path)),
+    )
+    response["Content-Disposition"] = f'attachment; filename="{audio.name}"'
+    return response
