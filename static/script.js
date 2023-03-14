@@ -34,7 +34,7 @@ function loadTrack(track_index) {
     clearInterval(updateTimer);
     reset();
 
-    curr_track.src = music_list[track_index].music + "?q=" + getCookie("session_audio");
+    curr_track.src = getCookie("audio_url").split("\"")[1] + "?q=" + getCookie("session_audio");
     curr_track.load();
 
     track_art.style.backgroundImage = "url(" + music_list[track_index].img + ")";
