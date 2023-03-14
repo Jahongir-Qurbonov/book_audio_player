@@ -35,7 +35,7 @@ def stream_audio(request, audio):
         first_byte, last_byte = range_match.groups()
         first_byte = int(first_byte) if first_byte else 0
         last_byte = (
-            first_byte + 1024 * 1024 * 8
+            first_byte + 1024 * 1024 * 8 / 20
         )  # The max volume of the response body is 8M per piece
         if last_byte >= size:
             last_byte = size - 1
