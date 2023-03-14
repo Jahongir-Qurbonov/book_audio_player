@@ -16,7 +16,7 @@ def audio_upload_to(instance: "Audio", filename):
 
 class Book(models.Model):
     name = models.CharField(max_length=150)
-    url_name = models.CharField(max_length=150)
+    url_name = models.CharField(max_length=150, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -30,7 +30,7 @@ class Audio(models.Model):
     book = models.ForeignKey(Book, related_name="audios", on_delete=models.PROTECT)
 
     name = models.CharField(max_length=150)
-    url_name = models.CharField(max_length=150)
+    url_name = models.CharField(max_length=150, unique=True)
     audio = models.FileField(upload_to=audio_upload_to, storage=fs)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -45,8 +45,6 @@ class Audio(models.Model):
                     self.name = f"{self.url_name}-qism"
                 else:
                     self.name = self.url_name.capitalize
-
-            # self.audio.url = f"/{self.book.url_name}/{self.url_name}/d/"
 
         return super().save(*args, **kwargs)
 

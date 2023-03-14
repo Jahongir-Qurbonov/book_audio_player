@@ -16,7 +16,6 @@ def file_iterator(file_path, chunk_size=8192, offset=0, length=None):
                 if remaining is None 
                 else min(remaining, chunk_size)
             )
-            time.sleep(0.1)
             data = f.read(bytes_length)
             if not data:
                 break
@@ -54,8 +53,8 @@ def stream_audio(request, audio):
         )
     response["Accept-Ranges"] = "bytes"
 
-    # response['X-Accel-Redirect'] = audio.url
-    response['X-Accel-Buffering'] = 'no'
-    response['Content-Length'] = os.path.getsize(audio.path)
+    # response['X-Accel-Redirect'] = f"/{audio.book.url_name}/{audio.url_name}/d/"
+    # response['X-Accel-Buffering'] = 'no'
+    # response['Content-Length'] = os.path.getsize(audio.path)
     response['Content-Dispostion'] = "attachment; filename=" + audio.name
     return response
