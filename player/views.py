@@ -58,7 +58,7 @@ def download_book_audio(request: HttpRequest, book_url_name, audio_url_name):
     try:
         audio = Audio.objects.get(
             book__url_name=book_url_name, url_name=audio_url_name
-        ).audio
+        )
     except:
         return HttpResponseNotFound("File not exist")
 

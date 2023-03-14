@@ -24,7 +24,7 @@ def file_iterator(file_path, chunk_size=8192, offset=0, length=None):
             yield data
 
 def stream_audio(request, audio):
-    path = audio.path
+    path = audio.audio.path
     content_type = "audio/mp3"
 
     range_header = request.META.get("HTTP_RANGE", "").strip()
