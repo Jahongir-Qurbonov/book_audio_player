@@ -1,5 +1,6 @@
 import re
 import os
+import time
 from wsgiref.util import FileWrapper
 from django.http import StreamingHttpResponse
 from django.conf import settings
@@ -16,6 +17,7 @@ def file_iterator(file_path, chunk_size=8192, offset=0, length=None):
                 if remaining is None 
                 else min(remaining, chunk_size)
             )
+            time.sleep(0.1)
             data = f.read(bytes_length)
             if not data:
                 break
