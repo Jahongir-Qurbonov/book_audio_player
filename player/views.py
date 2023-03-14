@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.contrib.sessions.models import Session
 from django.views.decorators.http import require_GET
 from .models import Audio, SessionAudio
-from .utils import process_response
+from .utils import process_response, range_file
 
 
 @require_GET
@@ -62,9 +62,5 @@ def download_book_audio(request: HttpRequest, book_url_name, audio_url_name):
     except:
         return HttpResponseNotFound("File not exist")
 
-    response = process_response(
-        request,
-        FileResponse(audio.open("rb"), mimetypes.guess_type(audio.path)),
-    )
-    response["Content-Disposition"] = f'attachment; filename="{audio.name}"'
+    response = range_file(request, audio.path)
     return response
