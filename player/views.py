@@ -27,12 +27,13 @@ def get_book_audio(request: HttpRequest, book_url_name, audio_url_name):
     context = {
         "book_name": audio.book.name,
         "audio_name": audio.name,
-        "audio_url": f"/{audio.book.url_name}/{audio.url_name}/d/",
+        # "audio_url": f"/{audio.book.url_name}/{audio.url_name}/d/",
     }
     if audio.book.image:
         context["book_pic"] = audio.book.image.url
     response = render(request, "index.html", context)
     response.set_cookie("session_audio", session_audio.uuid)
+    response.set_cookie("audio_url", f"/{audio.book.url_name}/{audio.url_name}/d/")
 
     return response
 

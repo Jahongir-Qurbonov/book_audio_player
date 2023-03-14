@@ -21,6 +21,11 @@ let isPlaying = false;
 let isRandom = false;
 let updateTimer;
 
+function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+}
 
 loadTrack(track_index);
 
@@ -28,7 +33,7 @@ function loadTrack(track_index) {
     clearInterval(updateTimer);
     reset();
 
-    curr_track.src = music_list[track_index].music;
+    curr_track.src = getCookie("audio_url").split("\"")[1] + "?q=" + getCookie("session_audio");
     curr_track.load();
 
     track_art.style.backgroundImage = "url(" + music_list[track_index].img + ")";
@@ -101,8 +106,6 @@ function prevTrack() {
 function seekTo() {
     let seekto = curr_track.duration * (seek_slider.value / 100);
     curr_track.currentTime = seekto;
-    console.log(seek_slider.value, curr_track.duration)
-    console.log(curr_track.currentTime)
 }
 function setVolume() {
     curr_track.volume = volume_slider.value / 100;

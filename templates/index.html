@@ -71,15 +71,13 @@
         </div>
     </div>
 
-    <script src="{% static 'func.js' %}"></script>
-
     <script>
         const music_list = [
             {
                 img: "{% static 'daraja_logo.jpg' %}",
                 name: "{{ audio_name }}",
-                // artist: "{{ book_name }}",
-                music: "{{ audio_url }}?q=" + getCookie("session_audio"),
+                {% comment %} artist: "{{ book_name }}", {% endcomment %}
+                {% comment %} music: "{{ audio_url }}", {% endcomment %}
             }
         ];
     </script>
