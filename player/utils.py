@@ -55,6 +55,6 @@ def stream_audio(request, audio):
 
     # response['X-Accel-Redirect'] = f"/{audio.book.url_name}/{audio.url_name}/d/"
     # response['X-Accel-Buffering'] = 'no'
-    # response['Content-Length'] = os.path.getsize(audio.path)
+    response['Content-Length'] = size
     response['Content-Dispostion'] = "attachment; filename=" + audio.name
     return response
