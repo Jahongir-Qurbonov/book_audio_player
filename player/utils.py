@@ -53,8 +53,8 @@ def stream_audio(request, audio):
         )
     response["Accept-Ranges"] = "bytes"
 
-    # response['X-Accel-Redirect'] = f"/{audio.book.url_name}/{audio.url_name}/d/"
-    # response['X-Accel-Buffering'] = 'no'
+    response['X-Accel-Redirect'] = f"/{audio.book.url_name}/{audio.url_name}/d/"
+    response['X-Accel-Buffering'] = 'no'
     response['Content-Length'] = size
     response['Content-Dispostion'] = "attachment; filename=" + audio.name
     return response
