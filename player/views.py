@@ -61,5 +61,5 @@ def download_book_audio(request: HttpRequest, book_url_name, audio_url_name):
     except:
         return HttpResponseNotFound("File not exist")
 
-    response = stream_audio(request, audio.path)
+    response = stream_audio(request, audio)
     return response

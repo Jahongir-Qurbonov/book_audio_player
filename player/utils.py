@@ -3,7 +3,6 @@ import os
 import time
 from wsgiref.util import FileWrapper
 from django.http import StreamingHttpResponse
-from django.conf import settings
 
 RANGE_RE = re.compile(r"bytes\s*=\s*(\d+)\s*-\s*(\d*)", re.I)
 
@@ -25,7 +24,8 @@ def file_iterator(file_path, chunk_size=8192, offset=0, length=None):
                 remaining -= len(data)
             yield data
 
-def stream_audio(request, path):
+def stream_audio(request, audio):
+    path = audio.path
     content_type = "audio/mp3"
 
     range_header = request.META.get("HTTP_RANGE", "").strip()
@@ -53,4 +53,9 @@ def stream_audio(request, path):
             FileWrapper(open(path, "rb")), content_type=content_type
         )
     response["Accept-Ranges"] = "bytes"
+
+    response['X-Accel-Redirect'] = audio.url
+    response['X-Accel-Buffering'] = 'no'
+    response['Content-Length'] = os.path.getsize(audio.path)
+    response['Content-Dispostion'] = "attachment; filename=" + audio.path
     return response
