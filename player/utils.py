@@ -56,7 +56,10 @@ def range_file(request, file_path):
     response[
         "Content-Disposition"
     ] = f'attachment; filename="{os.path.basename(file_path)}"'
-    response["Accept-Ranges"] = "bytes"
+    response["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response["Pragma"] = "no-cache"
+    response["Expires"] = "0"
+
 
     # Set content length for the full file
     response["Content-Length"] = str(file_size)
