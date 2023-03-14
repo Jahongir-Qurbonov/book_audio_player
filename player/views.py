@@ -1,10 +1,9 @@
-import mimetypes
-from django.http import HttpRequest, HttpResponseNotFound, FileResponse
+from django.http import HttpRequest, HttpResponseNotFound
 from django.shortcuts import render
 from django.contrib.sessions.models import Session
 from django.views.decorators.http import require_GET
 from .models import Audio, SessionAudio
-from .utils import process_response, range_file
+from .utils import stream_audio
 
 
 @require_GET
@@ -62,5 +61,5 @@ def download_book_audio(request: HttpRequest, book_url_name, audio_url_name):
     except:
         return HttpResponseNotFound("File not exist")
 
-    response = range_file(request, audio.path)
+    response = stream_audio(request, audio.path)
     return response
