@@ -2,9 +2,8 @@ from django.http import HttpRequest, HttpResponseNotFound
 from django.shortcuts import render
 from django.contrib.sessions.models import Session
 from django.views.decorators.http import require_GET
-from ranged_fileresponse import RangedFileResponse
 from .models import Audio, SessionAudio
-from .utils import serve_file
+from .range_file import RangedFileResponse
 
 
 @require_GET
@@ -57,12 +56,14 @@ def download_book_audio(request: HttpRequest, book_url_name, audio_url_name):
     # session_audio.delete()
 
     try:
-        audio = Audio.objects.get(
-            book__url_name=book_url_name, url_name=audio_url_name
-        )
+        audio = Audio.objects.get(book__url_name=book_url_name, url_name=audio_url_name)
     except:
         return HttpResponseNotFound("File not exist")
 
-    response = RangedFileResponse(request, audio.audio.open('rb'), content_type='audio/mpeg')
-    response['Content-Disposition'] = 'attachment; filename="%s"' % audio.audio.name
+    response = RangedFileResponse(
+        request,
+        {"file_like": audio.audio.open("rb"), "block_size": 512},
+        content_type="audio/mpeg",
+    )
+    response["Content-Disposition"] = 'attachment; filename="%s"' % audio.audio.name
     return response
