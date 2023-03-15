@@ -14,7 +14,6 @@ let total_duration = document.querySelector('.total-duration');
 let wave = document.getElementById('wave');
 let randomIcon = document.querySelector('.fa-random');
 let curr_track = document.createElement('audio');
-curr_track.preload = 'auto';
 
 let track_index = 0;
 let isPlaying = false;
