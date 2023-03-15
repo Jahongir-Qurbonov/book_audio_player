@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Daraja audio kitoblar</title>
     <link rel="stylesheet" href="{% static 'style.css' %}" />
-    <link rel="shortcut icon" href="{% static 'daraja_logo.jpg' %}" type="daraja.jpg/sm-icon" />
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <style>
@@ -73,7 +73,7 @@
     <script>
         const music_list = [
             {
-                img: "{% static 'daraja_logo.jpg' %}",
+                img: "{% static 'daraja-android-chrome-192x192.png' %}",
                 name: "{{ audio_name }}",
                 {% comment %} artist: "{{ book_name }}", {% endcomment %}
                 {% comment %} music: "{{ audio_url }}", {% endcomment %}
