@@ -53,7 +53,7 @@ def download_book_audio(request: HttpRequest, book_url_name, audio_url_name):
         )
     except:
         return HttpResponseNotFound("File not exist")
-    # session_audio.delete()
+    session_audio.delete()
 
     try:
         audio = Audio.objects.get(
