@@ -20,20 +20,27 @@ let isPlaying = false;
 let isRandom = false;
 let updateTimer;
 
+let audio_url = getCookie("audio_url").split("\"")[1]
+let audio_key = getCookie("session_audio");
+
 function getCookie(name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
     if (parts.length == 2) return parts.pop().split(";").shift();
 }
 
+function delete_cookie(name) {
+    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
 
+delete_cookie("session_audio");
 loadTrack(track_index);
 
 function loadTrack(track_index) {
     clearInterval(updateTimer);
     reset();
 
-    curr_track.src = getCookie("audio_url").split("\"")[1] + "?q=" + getCookie("session_audio");
+    curr_track.src = audio_url + "?q=" + audio_key
     curr_track.load();
 
     track_art.style.backgroundImage = "url(" + music_list[track_index].img + ")";
