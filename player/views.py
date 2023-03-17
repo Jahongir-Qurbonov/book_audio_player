@@ -62,8 +62,6 @@ def download_book_audio(request: HttpRequest, book_url_name, audio_url_name):
     except:
         return HttpResponseNotFound("File not exist")
 
-    response = RangedFileResponse(
-        request, audio.open("rb"), content_type="audio/mpeg"
-    )
+    response = RangedFileResponse(request, audio.open("rb"), content_type="audio/mpeg")
     response["Content-Disposition"] = 'attachment; filename="%s"' % audio.name
     return response
